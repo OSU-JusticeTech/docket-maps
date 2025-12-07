@@ -41,18 +41,28 @@
 
     <!-- Left List -->
     <div class="sidebar">
-        <h3>Path</h3>
-        <ul>
-            {% for item in items %}
-                <li><a href="?nodes={{ '::'.join(items[:loop.index]) }}">{{ item.split("~")[1] }}</a></li>
-            {% endfor %}
+        <h3>Breadcrumbs</h3>
+<div class="breadcrumbs">
+    <ul>
+    {% for name, link in breadcrumbs %}
+       <li> <a href="{{ link }}">{{ name }}</a> </li>
+    {% endfor %}
         </ul>
-        <h3>Next options</h3>
-        <ul>
-            {% for item in next %}
-            <li>{{item.0}}: <a href="?nodes={{ '::'.join(items) }}::{{ item.1 }}">{{ item.1.split("~")[1] }}</a></li>
-            {% endfor %}
-        </ul>
+</div>
+
+<h3>Next options:</h3>
+<div class="children">
+    {% if children %}
+    <ul>
+        {% for label, link, num in children %}
+            <li><a href="{{ link }}">{{ label }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <i>No further children (end of path).</i>
+    {% endif %}
+</div>
+
     </div>
 
     <!-- Map -->
