@@ -4,24 +4,19 @@ from collections import defaultdict
 from flask import Flask, render_template, request
 import folium
 from folium.plugins import HeatMap
-from idna.idnadata import joining_types
 
 from pyschema import Case
 from pydantic import TypeAdapter
 
-from test import coords
-
 Cases = TypeAdapter(list[Case])
 
-cvg = Cases.validate_json(open("2024_cases_cvg.json").read())
+cvg = Cases.validate_json(open("data/2024_cases_cvg.json").read())
 print("cases loaded")
 
-short_map = json.load(open("short_map_relevant.json"))
+short_map = json.load(open("data/short_map_relevant.json"))
 #print(short_map)
-weights = json.load(open("entry_weights.json"))
+weights = json.load(open("data/entry_weights.json"))
 
-#print(weights)
-import networkx
 
 def tree():
     return defaultdict(tree)
@@ -44,7 +39,7 @@ for c in cvg:
     insert_path(root, path, case_id=c)
 
 
-geo = json.load(open("case_geo_2024.json"))
+geo = json.load(open("data/case_geo_2024.json"))
 
 for c in cvg:
     if c.case_number in geo:
@@ -101,7 +96,7 @@ def test(path):
         coords = [c.location for c in subtree["_cases"] if c.location is not None]
     else:
         coords = [c.location for c in cvg if c.location is not None]
-        
+
     m = folium.Map(location=[coords[0][0], coords[0][1]], zoom_start=11, tiles="OpenStreetMap")
 
     # Add heatmap layer

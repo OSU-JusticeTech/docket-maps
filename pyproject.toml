@@ -1,0 +1,15 @@
+[project]
+name = "docket-maps"
+version = "0.1.0"
+description = "Flask tree viewer"
+requires-python = ">=3.10"
+dependencies = [
+    "flask",
+    "gunicorn",
+    "pydantic",
+    "folium"
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
